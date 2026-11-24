@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Gökyüzü &amp; Adım — Akıllı Şehir Rota Planlayıcı</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300..600;1,300..500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<!-- Gece gökyüzü, yıldızlar ve kayan yıldız katmanları -->
+<div class="sky" aria-hidden="true">
+  <div class="stars"></div>
+  <div class="shooting-stars">
+    <span></span><span></span><span></span>
+  </div>
+  <div class="mood-glow"></div>
+</div>
+
+<header>
+  <div class="kicker">Canlı veriyle karar destek</div>
+  <h1>Gökyüzü <em>&amp;</em> Adım</h1>
+  <p class="sub">Şehrini, tarihini ve temponu seç; canlı hava tahmini ve gerçek harita/mekân verileriyle sana özel yürüyüş rotası çıkaralım.</p>
+</header>
+
+<div class="app">
+  <div class="col">
+    <!-- Rota Kontrol Paneli -->
+    <section class="panel">
+      <h2>Rota Kontrol Paneli</h2>
+      <form id="f">
+        <label class="wide">Şehir<input id="city" placeholder="Örn. Ankara, Lizbon, Kyoto" required></label>
+        <label>Başlangıç tarihi<input type="date" id="startDate" required></label>
+        <label>Gün sayısı<select id="days"><option>1</option><option>2</option><option selected>3</option><option>4</option><option>5</option></select></label>
+        <label class="wide">Tempo<select id="tempo"><option value="3">Sakin (3 durak/gün)</option><option value="5" selected>Dengeli (5 durak/gün)</option><option value="7">Yoğun (7 durak/gün)</option></select></label>
+        <div class="wide btns">
+          <button class="pri" id="go" type="submit">Rotayı oluştur</button>
+          <button type="button" id="load">Kayıtlı rotayı aç</button>
+        </div>
+      </form>
+      <div class="chips">
+        <span>Hızlı demo:</span>
+        <button type="button" class="chip" data-c="Prag">Prag</button>
+        <button type="button" class="chip" data-c="Viyana">Viyana</button>
+        <button type="button" class="chip" data-c="Ankara">Ankara</button>
+      </div>
+    </section>
+
+    <div id="status"></div>
+
+    <div id="result" hidden>
+      <div class="tabs" id="tabs"></div>
+      <div id="wx"></div>
+      <div class="stats" id="stats"></div>
+      <div id="stops"></div>
+      <label class="addrow">Havuzdan durak ekle<select id="addSel"></select></label>
+      <div class="tools">
+        <button type="button" id="add">+ Durak ekle</button>
+        <button type="button" id="save">Kaydet</button>
+        <button type="button" id="json">JSON indir</button>
+        <button type="button" id="prn">Yazdır / PDF</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- İnteraktif Dünya / Rota Haritası -->
+  <div class="map-wrap">
+    <div class="map-bar">
+      <span id="mapCaption">Dünya Görünümü · Şehir seç veya haritayı gez</span>
+      <button type="button" id="resetWorld" class="mini-btn">Dünya Haritası</button>
+    </div>
+    <div id="map"></div>
+  </div>
+</div>
+
+<div id="print"></div>
+<div id="toast" role="status"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
